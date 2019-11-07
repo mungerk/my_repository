@@ -10,7 +10,6 @@ import random
 def roll_dice(num_dice):
     #returns the total number of point earned for rolling that number of dice
     #returns the sum of the Dice. If any ones are rolled, return a score of 1 
-    
     #checks to make sure the user entered a legal number of dice
     if (num_dice > 10) or (num_dice < 1):
         print("Warning, incorrect number of dice")
@@ -31,7 +30,6 @@ def roll_dice(num_dice):
 
 def take_turn(score, opponent_score, num_dice):
     #Calls roll_dice to play one turn of hog, returns the number of points accumulated that round
-    
     #checks to see if the sum of the players scores end in 7, if it does only one die is rolled this turn
     if (score + opponent_score) % 10 == 7: #ends in 7:
         points = roll_dice(1)
@@ -67,9 +65,7 @@ def human_player(score, opponent_score, goal_score):
     '''
     strategy function for the human, asks for input of how many dice to roll, returns num_dice
     '''
-   
     print("Your score is ",score, " and your opponent's score is ",opponent_score)
-    
     numberAsAString = input("Enter in the number of dice to roll (0-10): ")
     num_dice = int(numberAsAString)
     return num_dice
@@ -108,14 +104,34 @@ def play_hog(goal_score, max_rounds, strategy1, strategy2):
         print('You Tied! Your Score= ',score, "Your Opponent's Score = ", opponent_score)
         return 0
     
+def welcome_text(answer):
+    
+    if (answer == 'Yes'):
+        print('\n')
+        print('Rules of the game: Hog is a two-player game in which players alternate turns.')
+        print('On a player’s turn, they choose how many dice they’d like to roll (1-10).')
+        print('If the sum of the players’ scores ends in a 7, then the current player is only allowed to roll 1 die.')
+        print('On a players turn, if no 1s come up, their score for this turn is the total of the rolled dice.')
+        print('If any 1s come up, their score for this turn is 1.')
+        print('The player’s score for this turn is added to their total score, and their opponent gets a turn.')
+        print('Play continues until one of the players reaches a particular number.')
+        print('\n')
+    elif (answer =='No'):
+        pass
+    else:
+        answer = input(' Please Answer Yes or No ')
+        welcome_text(answer)
+	
+
 def main():
     '''
 gets input from user of goal_score and max_rounds, and passes those numbers as integers to play_hog 
 will pass human_player strategy and roll_3_unless_close_to_end strategy to play_hog as parameters
-
 '''
     print('Welcome To Hog!')
-    goal_score_string = input('What would you like to play to? ')
+    answer = input('Would you like to learn the instructions? Please Answer Yes or No ')
+    welcome_text(answer)
+    goal_score_string = input('What number would you like to play to? ')
     goal_score = int(goal_score_string)
     max_rounds_string = input("How many rounds? ")
     max_rounds = int(max_rounds_string)
